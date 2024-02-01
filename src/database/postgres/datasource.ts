@@ -5,7 +5,8 @@ import { User } from "./entities/user.entity";
 import { Session } from "./entities/session.entity";
 import { resolve } from "path";
 import "dotenv/config";
-import { UserSession } from "./entities/user-session.entity";
+import { ClientSession } from "./entities/client-session.entity";
+import { Client } from "./entities/client.entity";
 
 export const dataSource = new DataSource({
   type: 'postgres',
@@ -15,7 +16,7 @@ export const dataSource = new DataSource({
   password: process.env.DB_PASSWORD ,
   database: process.env.DB_DATABASE ,
   schema: process.env.DB_SCHEMA,
-  entities: [Session, Topic, Vote, User, UserSession],
+  entities: [Session, Topic, Vote, User, ClientSession, Client],
   synchronize: false,
   migrations: [resolve(__dirname, "migrations", "*{.ts,.js}")],
   uuidExtension: "uuid-ossp"

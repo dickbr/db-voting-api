@@ -2,8 +2,8 @@ import { RequestMethod, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
-import { CacheRepository } from './database';
 import { ErrorHandlerMiddleware } from 'middlewares/errors/error-handler.middleware';
+import cors from 'cors';
 
 async function initializeApp() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -11,6 +11,8 @@ async function initializeApp() {
     new FastifyAdapter()
   );
   
+  app.use(cors());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -21,7 +23,7 @@ async function initializeApp() {
 
   app.useGlobalFilters(new ErrorHandlerMiddleware())
 
-  app.setGlobalPrefix('api', {
+  app.setGlobalPrefix('api/v1', {
     exclude: [{ path: 'health-check', method: RequestMethod.GET }]
   })
 

@@ -1,9 +1,9 @@
 import {BaseEntity, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Session } from "./session.entity";
-import { User } from "./user.entity";
+import { Client } from "./client.entity";
 
-@Entity('user_sessions')
-export class UserSession extends BaseEntity {
+@Entity('client_sessions')
+export class ClientSession extends BaseEntity {
  @PrimaryGeneratedColumn('uuid')
  id?: string;
 
@@ -11,9 +11,9 @@ export class UserSession extends BaseEntity {
  @JoinColumn({name: 'session_id'})
  session?: Session;
 
- @ManyToOne(() => User, user => user.user_session)
- @JoinColumn({name: 'user_id'})
- user?: User;
+ @ManyToOne(() => Client, client => client.client_session)
+ @JoinColumn({name: 'client_id'})
+ client?: Client;
 
  @Column({type: 'timestamp'}) 
  start_at?: Date;

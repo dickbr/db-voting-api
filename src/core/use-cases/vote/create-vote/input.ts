@@ -4,7 +4,7 @@ export class Input {
    
   @IsString()
   @IsNotEmpty()
-  user_id!: string;
+  client_id!: string;
 
   @IsString()
   @IsNotEmpty()

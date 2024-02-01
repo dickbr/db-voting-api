@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { Vote } from '@database/postgres/entities/vote.entity';
 import { CreateVoteRequest } from 'dtos';
 import { Repository } from 'typeorm';
@@ -20,24 +20,25 @@ export class CreateVote {
 
   async execute(input: Input): Promise<Vote> {
     const session = await this.sessionRepository.findOne({ where: { id: input.session_id } });
+
     if (!session || session.end_date && session.end_date <= new Date()) {
-      throw new Error('A Sessao ja finalizou');
+      throw new ConflictException('A Sessao ja finalizou');
     }
 
     const topic = await this.topicRepository.findOne({ where: { id: input.topic_id } });
     
     if (!topic) {
-      throw new Error('O Topico nao existe');
+      throw new NotFoundException('O Topico nao existe');
     }
     
-    const existingVote = await this.votesRepository.findOne({ where: { user_id: input.user_id, topic_id: input.topic_id } });
+    const existingVote = await this.votesRepository.findOne({ where: { client_id: input.client_id, topic_id: input.topic_id } });
 
     if (existingVote) {
-      throw new Error('O usuário já votou neste tópico');
+      throw new ConflictException('O usuário já votou neste tópico');
     }
   
     const vote = this.votesRepository.create({
-      user_id: input.user_id,
+      client_id: input.client_id,
       topic_id: input.topic_id,
       choice: input.choice,
     });

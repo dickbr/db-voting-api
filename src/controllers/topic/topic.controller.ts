@@ -7,12 +7,15 @@ import {
  Query,
  Put,
  Param,
+ UseGuards,
 } from '@nestjs/common';
 import { CreateTopic } from 'core/use-cases/topic/create-topic/create-topic.use-case';
 import { ListTopic } from 'core/use-cases/topic/list-topic/list-topic.use-case';
 import { UpdateTopic } from 'core/use-cases/topic/update-topic';
 import { CreateTopicRequest } from 'dtos';
 import { UpdateTopicRequest } from 'dtos/topic/update-topic.request';
+import { AdminMiddleware } from 'middlewares/auth/admin.middleware';
+import { AuthMiddleware } from 'middlewares/auth/auth.middleware';
 
 @Controller('topics')
 export class TopicController {
@@ -24,11 +27,13 @@ export class TopicController {
   ) {}
 
   @Post()
+  @UseGuards(AuthMiddleware, AdminMiddleware)
   create(@Body() body: CreateTopicRequest) {
       return this.createTopic.execute(body);
   }
 
   @Put(':id')
+  @UseGuards(AuthMiddleware, AdminMiddleware)
   update(
     @Body() body: UpdateTopicRequest,
     @Param('id') id: string

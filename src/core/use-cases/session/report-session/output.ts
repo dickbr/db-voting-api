@@ -1,5 +1,6 @@
 export class Output {
-  id!: string
+  session_id!: string
+  topic_id!: string
   session_title!: string
   topic_title!: string
   total_yes!: number

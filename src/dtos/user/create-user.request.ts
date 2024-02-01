@@ -22,4 +22,8 @@ export class CreateUserRequest {
   @IsOptional()
   password?: string;
 
+  @IsEnum(RoleEnum)
+  @IsOptional()
+  role?: RoleEnum;
+
 }

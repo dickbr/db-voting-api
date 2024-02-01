@@ -12,7 +12,6 @@ export class CreateUser {
  constructor(@InjectRepository(User) private userRepository: Repository<User>){}
 
  async execute(input: Input): Promise<User> {
-  console.log({input})
     const existingUser = await this.userRepository.findOne({ where: { cpf: input.cpf } });
 
     if (existingUser) {
@@ -22,7 +21,7 @@ export class CreateUser {
     const user = await this.userRepository.save({
       ...input,
       password: input.password ? await hash(input.password, await genSalt(2)) : undefined,
-      role: RoleEnum.USER
+      role: input.role ?? RoleEnum.USER
     })
 
     return user;

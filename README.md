@@ -22,7 +22,7 @@ DB-Vote-API is a backend API built using the Nest.js framework. It's designed to
 1. Clone the repository:
 
 ``` bash 
-git clone https://github.com/dickbr/db-vote-api.git cd db-vote-api
+git clone https://github.com/dickbr/db-voting-api.git cd db-voting-api
 
 ```
 
@@ -53,12 +53,12 @@ yarn start dev
 
 ## Usage
 
-After starting the server, you can access the API endpoints at `http://localhost:3001/api/`.
+After starting the server, you can access the API endpoints at `http://localhost:3001/api/v1`.
 
 For example, to list all topics:
 
 ``` bash 
-curl http://localhost:3001/api/topics
+curl http://localhost:3001/api/v1/topics
 ```
 
 ## Contributing

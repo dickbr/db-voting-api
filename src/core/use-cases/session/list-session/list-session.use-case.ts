@@ -1,36 +1,30 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Session } from '@database/postgres/entities/session.entity';
-import { MoreThan, Repository, FindOptionsWhere } from 'typeorm';
+import { MoreThan, Repository, FindOptionsWhere, LessThan } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@database/postgres/entities/user.entity';
+import { Client } from '@database/postgres/entities/client.entity';
 
 @Injectable()
 export class ListSession {
   constructor(
     @InjectRepository(Session) private sessionRepository: Repository<Session>,
-    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Client) private clientRepository: Repository<Client>,
   ){}
 
-  async execute(user_id: string, category?: string): Promise<Session[]> {
-    if (!user_id) {
-      throw new BadRequestException("User Id nao informado");
-    }
-
-    const user = await this.userRepository.findOne({ where: { id: user_id } });
-    if (!user) {
-      throw new NotFoundException("Usuario nao encontrado");
-    }
-
+  async execute(string, category?: string): Promise<Session[]> {
     let where: FindOptionsWhere<Session> = {};
-
-    if (user.role !== 'admin') {
-      where.end_date = MoreThan(new Date());
-    }
 
     if (category) {
       where = { ...where, category };
     }
 
-    return await this.sessionRepository.find({ where });
+    return await this.sessionRepository.find({ 
+      where: {
+        ...where,
+        start_date: LessThan(new Date),
+        end_date: MoreThan(new Date),
+      } 
+    });
   }
 }

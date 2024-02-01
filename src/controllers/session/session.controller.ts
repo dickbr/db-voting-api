@@ -9,6 +9,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { CreateSession } from 'core/use-cases/session/create-session/create-session.use-case';
+import { ListSessionAdmin } from 'core/use-cases/session/list-session/list-session-admin.use-case';
 import { ListSession } from 'core/use-cases/session/list-session/list-session.use-case';
 import { ReportSession } from 'core/use-cases/session/report-session/report-session.use-case';
 import { CreateSessionRequest } from 'dtos/session/create-session.request';
@@ -20,6 +21,7 @@ export class SessionController {
   constructor(
     private readonly createSession: CreateSession,
     private readonly listSession: ListSession,
+    private readonly listSessionAdmin: ListSessionAdmin,
     private readonly reportSession: ReportSession,
   ) {}
 
@@ -29,12 +31,24 @@ export class SessionController {
     return this.createSession.execute(body);
   }
 
+  @Get('admin')
+  @UseGuards(AuthMiddleware, AdminMiddleware)
+  listAdmin(
+    @Query("category") category?: string): Promise<Session[]> {
+    return this.listSessionAdmin.execute(category);
+ }
+
   @Get()
-  list(@Query("user_id") user_id: string): Promise<Session[]> {
-    return this.listSession.execute(user_id);
+  list(
+    @Query("client_id") client_id: string,
+    @Query("category") category?: string
+  ): Promise<Session[]> {
+    console.log(client_id)
+    return this.listSession.execute(client_id, category);
  }
 
   @Get(':id')
+  @UseGuards(AuthMiddleware, AdminMiddleware)
   report(@Param("id") id: string) {
     return this.reportSession.execute(id);
  }

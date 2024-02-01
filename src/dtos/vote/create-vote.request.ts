@@ -3,7 +3,7 @@ import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 export class CreateVoteRequest {
   @IsString()
   @IsNotEmpty()
-  user_id!: string;
+  client_id!: string;
 
   @IsString()
   @IsNotEmpty()

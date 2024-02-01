@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Topic } from "./topic.entity";
-import { User } from "./user.entity";
+import { Client } from "./client.entity";
 
 @Entity('votes')
 export class Vote extends BaseEntity {
@@ -8,7 +8,7 @@ export class Vote extends BaseEntity {
   id?: string;
 
   @Column({type: 'uuid'})
-  user_id!: string;
+  client_id!: string;
 
   @Column({type: 'uuid'})
   topic_id!: string;
@@ -29,7 +29,7 @@ export class Vote extends BaseEntity {
   @JoinColumn({name: 'topic_id'})
   topic?: Topic;
   
-  @ManyToOne(() => User, user => user.votes)
-  @JoinColumn({name: 'user_id'})
-  user?: User;
+  @ManyToOne(() => Client, client => client.votes)
+  @JoinColumn({ name: 'client_id' })
+  client?: Client;
 }

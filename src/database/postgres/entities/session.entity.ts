@@ -1,6 +1,6 @@
 import {BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Topic } from "./topic.entity";
-import { UserSession } from "./user-session.entity";
+import { ClientSession } from "./client-session.entity";
 
 @Entity('sessions')
 export class Session extends BaseEntity {
@@ -35,9 +35,9 @@ export class Session extends BaseEntity {
   @JoinColumn({referencedColumnName: 'session_id'})
   topics?: Topic[];
 
-  @OneToMany(() => UserSession, userSession => userSession.session)
+  @OneToMany(() => ClientSession, clientSession => clientSession.session)
   @JoinColumn({referencedColumnName: 'session_id'})
-  user_session?: UserSession[];
+  user_session?: ClientSession[];
 
   @Column({type: 'bigint'})
   session_time!: number

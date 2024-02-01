@@ -16,8 +16,4 @@ export class Input {
   @IsString()
   @IsNotEmpty()
   session_id!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  category!: string;
 }
