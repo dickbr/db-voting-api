@@ -1,6 +1,6 @@
-# DB-Vote-API
+# Sistema de Votação - API
 
-DB-Vote-API é uma API de backend construída usando o framework Nest.js. Ela foi projetada para gerenciar votos em vários tópicos, permitindo que os usuários criem, atualizem e excluam tópicos, bem como votem neles. A API também fornece funcionalidades de autenticação e gerenciamento de sessões.
+API de backend construída usando o framework Nest.js. Ela foi projetada para gerenciar votos em vários tópicos, permitindo que os usuários criem, atualizem e excluam tópicos, bem como votem neles. A API também fornece funcionalidades de autenticação e gerenciamento de sessões.
 
 ## Tecnologias
 
