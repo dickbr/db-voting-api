@@ -32,7 +32,7 @@ import { CreateClient } from 'core/use-cases/client';
 import { ClientController } from 'controllers/client';
 import { ListSessionAdmin } from 'core/use-cases/session/list-session/list-session-admin.use-case';
 import { CreateUserAdmin } from 'core/use-cases/user/create-admin-user/create-user-admin.use-case';
-import { HttpExceptionFilter } from 'http-exception.filter';
+// import { HttpExceptionFilter } from 'http-exception.filter';
 
 
 
@@ -41,9 +41,9 @@ import { HttpExceptionFilter } from 'http-exception.filter';
       type: 'postgres',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT || ''),
-      username: process.env.DB_USERNAME ,
-      password: process.env.DB_PASSWORD ,
-      database: process.env.DB_DATABASE ,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       schema: process.env.DB_SCHEMA,
       entities: [Topic, Vote, Session, User, ClientSession, Client],
       synchronize: false,
@@ -66,10 +66,10 @@ import { HttpExceptionFilter } from 'http-exception.filter';
     CreateClient,
     ListSessionAdmin,
     CreateUserAdmin,
-    {
-      provide: APP_FILTER,
-      useClass: HttpExceptionFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: HttpExceptionFilter,
+    // },
   ],
 })
 export class AppModule {
